@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Briefcase } from "lucide-react";
-import missLTutoring from './assets/missLTutoring.png';
+import missLTutoring from '@/assets/missLTutoring.png';
 
 const Portfolio = () => {
   const projects = [
