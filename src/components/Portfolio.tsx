@@ -18,7 +18,7 @@ const Portfolio = () => {
       description: "Miss L Tutoring is a clean, responsive website deployed on Netlify that showcases private tutoring services for young learners (reading, phonics, and math). The design highlights the tutor’s personal approach, emphasizes home-based support, and makes it easy for parents to understand the value of tailored, one-on-one academic help.",
       technologies: ["TypeScript", "React"],
       category: "Web Development",
-      image: "https://chatgpt.com/s/m_691b1df907d0819191de2179c1dfd734",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
       link: "https://missltutoring.netlify.app/",
     }
     //, {
