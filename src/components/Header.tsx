@@ -24,6 +24,12 @@ const Header = () => {
             Services
           </button>
           <button 
+            onClick={() => scrollToSection("portfolio")} 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Portfolio
+          </button>
+          <button 
             onClick={() => scrollToSection("about")} 
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
@@ -39,7 +45,7 @@ const Header = () => {
 
         <Button 
           variant="whatsapp" 
-          onClick={() => window.open("https://wa.me/", "_blank")}
+          onClick={() => window.open("https://wa.me/27660462575", "_blank")}
           className="gap-2"
         >
           <MessageCircle className="w-4 h-4" />

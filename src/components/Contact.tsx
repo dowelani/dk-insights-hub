@@ -4,8 +4,7 @@ import { MessageCircle, Mail, MapPin, Phone } from "lucide-react";
 
 const Contact = () => {
   const handleWhatsAppClick = () => {
-    // Replace with actual WhatsApp number in format: https://wa.me/1234567890
-    window.open("https://wa.me/", "_blank");
+    window.open("https://wa.me/27660462575", "_blank");
   };
 
   return (

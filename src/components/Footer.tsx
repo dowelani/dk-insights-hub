@@ -17,7 +17,7 @@ const Footer = () => {
               Transforming businesses through innovative web development, data analytics, and data science solutions.
             </p>
             <button
-              onClick={() => window.open("https://wa.me/", "_blank")}
+              onClick={() => window.open("https://wa.me/27660462575", "_blank")}
               className="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-medium"
             >
               <MessageCircle className="w-5 h-5" />
