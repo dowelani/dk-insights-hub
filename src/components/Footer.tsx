@@ -1,4 +1,5 @@
 import { MessageCircle } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,9 +10,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-lg">
-                DK
-              </div>
+              <img src={logo} alt="DK Code & Insights Logo" className="w-12 h-12 object-contain" />
               <span className="text-xl font-bold text-foreground">DK Code & Insights</span>
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
