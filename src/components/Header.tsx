@@ -12,7 +12,9 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="DK Code & Insights Logo" className="w-12 h-12 object-contain" />
+          <div className="w-12 h-12 bg-background rounded-lg p-1 flex items-center justify-center">
+            <img src={logo} alt="DK Code & Insights Logo" className="w-full h-full object-contain" />
+          </div>
           <span className="text-xl font-bold text-foreground">DK Code & Insights</span>
         </div>
         
