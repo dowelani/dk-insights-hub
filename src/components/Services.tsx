@@ -10,8 +10,7 @@ const Services = () => {
       features: [
         "Responsive Design",
         "Modern Frameworks",
-        "Performance Optimization",
-        "SEO Best Practices"
+        "Performance Optimization"
       ],
       color: "text-primary",
       bgColor: "bg-primary/5",
