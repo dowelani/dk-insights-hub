@@ -5,38 +5,38 @@ import { ExternalLink, Briefcase } from "lucide-react";
 
 const Portfolio = () => {
   const projects = [
+    // {
+    //   title: "E-Commerce Analytics Dashboard",
+    //   description: "Built a comprehensive analytics platform for an online retail business, providing real-time insights into sales, customer behavior, and inventory management.",
+    //   technologies: ["React", "Python", "PostgreSQL", "Tableau"],
+    //   category: "Data Analytics",
+    //   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+    //   link: "#",
+    // },
     {
-      title: "E-Commerce Analytics Dashboard",
-      description: "Built a comprehensive analytics platform for an online retail business, providing real-time insights into sales, customer behavior, and inventory management.",
-      technologies: ["React", "Python", "PostgreSQL", "Tableau"],
-      category: "Data Analytics",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
-      link: "#",
-    },
-    {
-      title: "Healthcare Web Portal",
-      description: "Developed a modern, responsive web application for a healthcare provider, enabling patients to book appointments, access medical records, and communicate with doctors.",
-      technologies: ["TypeScript", "React", "Node.js", "MongoDB"],
+      title: "Miss L Tutoring",
+      description: "Miss L Tutoring is a clean, responsive website deployed on Netlify that showcases private tutoring services for young learners (reading, phonics, and math). The design highlights the tutor’s personal approach, emphasizes home-based support, and makes it easy for parents to understand the value of tailored, one-on-one academic help.",
+      technologies: ["TypeScript", "React"],
       category: "Web Development",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop",
-      link: "#",
-    },
-    {
-      title: "Predictive Maintenance System",
-      description: "Created a machine learning model to predict equipment failures in manufacturing, reducing downtime by 40% and saving significant operational costs.",
-      technologies: ["Python", "TensorFlow", "Scikit-learn", "AWS"],
-      category: "Data Science",
-      image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&h=500&fit=crop",
-      link: "#",
-    },
-    {
-      title: "Financial Trading Platform",
-      description: "Designed and deployed a high-performance trading platform with real-time market data visualization, automated trading algorithms, and risk management tools.",
-      technologies: ["React", "Python", "Redis", "WebSocket"],
-      category: "Web Development",
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop",
-      link: "#",
-    },
+      image: "https://chatgpt.com/s/m_691b1df907d0819191de2179c1dfd734",
+      link: "https://missltutoring.netlify.app/",
+    }
+    //, {
+    //   title: "Predictive Maintenance System",
+    //   description: "Created a machine learning model to predict equipment failures in manufacturing, reducing downtime by 40% and saving significant operational costs.",
+    //   technologies: ["Python", "TensorFlow", "Scikit-learn", "AWS"],
+    //   category: "Data Science",
+    //   image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&h=500&fit=crop",
+    //   link: "#",
+    // },
+    // {
+    //   title: "Financial Trading Platform",
+    //   description: "Designed and deployed a high-performance trading platform with real-time market data visualization, automated trading algorithms, and risk management tools.",
+    //   technologies: ["React", "Python", "Redis", "WebSocket"],
+    //   category: "Web Development",
+    //   image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop",
+    //   link: "#",
+    // },
   ];
 
   return (
