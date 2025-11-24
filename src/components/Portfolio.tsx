@@ -20,7 +20,7 @@ const Portfolio = () => {
       technologies: ["TypeScript", "React"],
       category: "Web Development",
       image: missLTutoring,
-      link: "https://missltutoring.netlify.app/",
+      link: "https://ltutoring.netlify.app/",
     }
     //, {
     //   title: "Predictive Maintenance System",
