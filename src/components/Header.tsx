@@ -68,6 +68,13 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link 
+            to="/shop" 
+            className="md:hidden text-primary hover:text-primary/80 transition-colors font-medium flex items-center gap-1"
+          >
+            <Store className="w-4 h-4" />
+            <span className="hidden sm:inline">Shop</span>
+          </Link>
           <CartIcon />
           <Button 
             variant="whatsapp" 
