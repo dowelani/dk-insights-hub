@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Store } from "lucide-react";
 import logo from "@/assets/logo.png";
 import CartIcon from "@/components/shop/CartIcon";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        element?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
