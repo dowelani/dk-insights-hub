@@ -333,6 +333,13 @@ const Checkout = () => {
                               <span className="text-sm text-muted-foreground block">Pay with your PayPal account</span>
                             </Label>
                           </div>
+                          <div className="flex items-center space-x-3 p-4 border border-border rounded-lg hover:border-primary/50 transition-colors">
+                            <RadioGroupItem value="card" id="card" />
+                            <Label htmlFor="card" className="flex-1 cursor-pointer">
+                              <span className="font-medium">Card Payment</span>
+                              <span className="text-sm text-muted-foreground block">Pay with your card</span>
+                            </Label>
+                          </div>
                         </RadioGroup>
                       </CardContent>
                     </Card>
