@@ -63,10 +63,9 @@ const Header = () => {
           ))}
           <Link 
             to="/shop" 
-            className="text-primary hover:text-primary/80 transition-colors font-medium flex items-center gap-1"
+            className="text-foreground hover:text-foreground/70 transition-colors"
           >
-            <Store className="w-4 h-4" />
-            Shop
+            <Store className="w-5 h-5" />
           </Link>
         </nav>
 
@@ -97,7 +96,7 @@ const Header = () => {
                   <Link
                     to="/shop"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-primary hover:text-primary/80 transition-colors font-medium flex items-center gap-2 py-2"
+                    className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-2 py-2"
                   >
                     <Store className="w-4 h-4" />
                     Shop
@@ -133,9 +132,9 @@ const Header = () => {
 
           <Link 
             to="/shop" 
-            className="md:hidden text-primary hover:text-primary/80 transition-colors font-medium flex items-center gap-1"
+            className="md:hidden text-foreground hover:text-foreground/70 transition-colors"
           >
-            <Store className="w-4 h-4" />
+            <Store className="w-5 h-5" />
           </Link>
           
           <CartIcon />
