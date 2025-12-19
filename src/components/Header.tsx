@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { MessageCircle, Store, Menu, User, LogIn, UserPlus } from "lucide-react";
-import logo from "@/assets/robot-logo.png";
+import logo from "@/assets/logo.png";
 import CartIcon from "@/components/shop/CartIcon";
 
 const Header = () => {
@@ -61,12 +61,7 @@ const Header = () => {
               {item.label}
             </button>
           ))}
-          <Link 
-            to="/shop" 
-            className="text-foreground hover:text-foreground/70 transition-colors"
-          >
-            <Store className="w-5 h-5" />
-          </Link>
+          
         </nav>
 
         <div className="flex items-center gap-2">
@@ -93,55 +88,28 @@ const Header = () => {
                       {item.label}
                     </button>
                   ))}
-                  <Link
-                    to="/shop"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-2 py-2"
-                  >
-                    <Store className="w-4 h-4" />
-                    Shop
-                  </Link>
                 </nav>
-                <div className="pt-4 border-t border-border space-y-3">
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start gap-2"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      navigate('/auth');
-                    }}
-                  >
-                    <LogIn className="w-4 h-4" />
-                    Login
-                  </Button>
-                  <Button 
-                    variant="gradient" 
-                    className="w-full justify-start gap-2"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      navigate('/auth');
-                    }}
-                  >
-                    <UserPlus className="w-4 h-4" />
-                    Register
-                  </Button>
-                </div>
+               
               </div>
             </SheetContent>
           </Sheet>
 
-          <Link 
-            to="/shop" 
-            className="md:hidden text-foreground hover:text-foreground/70 transition-colors"
+          <Button
+            asChild
+            variant="ghost"
+            size="icon"
+            className="relative"
           >
-            <Store className="w-5 h-5" />
-          </Link>
+            <Link to="/shop">
+              <Store className="w-5 h-5" />
+            </Link>
+          </Button>
           
           <CartIcon />
           
           {/* User Menu - Desktop */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className="hidden sm:flex">
+            <DropdownMenuTrigger asChild className="sm:flex">
               <Button variant="ghost" size="icon">
                 <User className="w-5 h-5" />
               </Button>
@@ -149,11 +117,7 @@ const Header = () => {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => navigate('/auth')}>
                 <LogIn className="w-4 h-4 mr-2" />
-                Login
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate('/auth')}>
-                <UserPlus className="w-4 h-4 mr-2" />
-                Register
+                Login/Register
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -161,10 +125,9 @@ const Header = () => {
           <Button 
             variant="whatsapp" 
             onClick={() => window.open("https://wa.me/27660462575", "_blank")}
-            className="gap-2 hidden sm:flex"
+            className="gap-2 sm:flex"
           >
             <MessageCircle className="w-4 h-4" />
-            <span className="hidden sm:inline">WhatsApp</span>
           </Button>
         </div>
       </div>
