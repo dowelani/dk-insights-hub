@@ -25,38 +25,40 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <Card className="bg-gradient-primary text-primary-foreground border-0 shadow-elegant p-8">
-            <CardContent className="p-0">
+            <CardContent className="p-0 text-center lg:text-left">
               <h3 className="text-3xl font-bold mb-6">Contact us via WhatsApp</h3>
               <p className="text-primary-foreground/90 text-lg mb-8 leading-relaxed">
                 We're here to answer your questions and discuss how we can help your business grow. 
                 Click the button below to start a conversation on WhatsApp.
               </p>
-              <Button 
-                variant="whatsapp" 
-                size="lg" 
-                onClick={handleWhatsAppClick}
-                className="w-full sm:w-auto text-lg px-8 py-6 gap-3"
-              >
-                <MessageCircle className="w-5 h-5" />
-                Message on WhatsApp
-              </Button>
+              <div className="flex justify-center lg:justify-start">
+                <Button 
+                  variant="whatsapp" 
+                  size="lg" 
+                  onClick={handleWhatsAppClick}
+                  className="w-full sm:w-auto text-lg px-8 py-6 gap-3"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Message on WhatsApp
+                </Button>
+              </div>
               
               <div className="mt-12 space-y-4">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center lg:items-start gap-4 justify-center lg:justify-start">
                   <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <div className="font-semibold mb-1">Email</div>
                     <a href="mailto:dowelanikhumbelo@gmail.com" className="text-primary-foreground/80 hover:underline">dowelanikhumbelo@gmail.com</a>
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-4">
+                <div className="flex items-center lg:items-start gap-4 justify-center lg:justify-start">
                   <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <div className="font-semibold mb-1">Phone</div>
                     <div className="text-primary-foreground/80">Available via WhatsApp</div>
                   </div>
