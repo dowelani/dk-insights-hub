@@ -5,17 +5,20 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
-  DropdownMenuItem, 
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { MessageCircle, Store, Menu, User, LogIn, UserPlus } from "lucide-react";
+import { MessageCircle, Store, Menu, User, LogIn, LogOut } from "lucide-react";
 import logo from "@/assets/logo.png";
 import CartIcon from "@/components/shop/CartIcon";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
@@ -29,6 +32,11 @@ const Header = () => {
       const element = document.getElementById(id);
       element?.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
   const navItems = [
@@ -61,7 +69,6 @@ const Header = () => {
               {item.label}
             </button>
           ))}
-          
         </nav>
 
         <div className="flex items-center gap-2">
@@ -89,7 +96,40 @@ const Header = () => {
                     </button>
                   ))}
                 </nav>
-               
+                
+                {/* Mobile Auth Section */}
+                <div className="pt-4 border-t border-border space-y-3">
+                  {user ? (
+                    <>
+                      <div className="text-sm text-muted-foreground px-2">
+                        Signed in as {profile?.first_name || user.email}
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start gap-2"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          handleSignOut();
+                        }}
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <Button 
+                      variant="gradient" 
+                      className="w-full justify-start gap-2"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        navigate('/auth');
+                      }}
+                    >
+                      <LogIn className="w-4 h-4" />
+                      Login / Register
+                    </Button>
+                  )}
+                </div>
               </div>
             </SheetContent>
           </Sheet>
@@ -107,25 +147,38 @@ const Header = () => {
           
           <CartIcon />
           
-          {/* User Menu - Desktop */}
+          {/* User Menu */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className="sm:flex">
+            <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
                 <User className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => navigate('/auth')}>
-                <LogIn className="w-4 h-4 mr-2" />
-                Login/Register
-              </DropdownMenuItem>
+              {user ? (
+                <>
+                  <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                    {profile?.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : user.email}
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <DropdownMenuItem onClick={() => navigate('/auth')}>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login / Register
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 
           <Button 
             variant="whatsapp" 
             onClick={() => window.open("https://wa.me/27660462575", "_blank")}
-            className="gap-2 sm:flex"
+            className="gap-2 hidden sm:flex"
           >
             <MessageCircle className="w-4 h-4" />
           </Button>
