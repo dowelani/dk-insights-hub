@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowLeft, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
@@ -47,6 +48,16 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, signIn, signUp } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -72,14 +83,56 @@ const Auth = () => {
     },
   });
 
-  const onLogin = (data: LoginFormData) => {
-    console.log('Login submitted:', data);
-    toast.success('Login functionality will be connected to backend');
+  const onLogin = async (data: LoginFormData) => {
+    setIsLoading(true);
+    try {
+      const { error } = await signIn(data.email, data.password);
+      
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          toast.error('Invalid email or password');
+        } else if (error.message.includes('Email not confirmed')) {
+          toast.error('Please check your email to confirm your account');
+        } else {
+          toast.error(error.message);
+        }
+        return;
+      }
+      
+      toast.success('Welcome back!');
+      navigate('/');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const onRegister = (data: RegisterFormData) => {
-    console.log('Register submitted:', data);
-    toast.success('Registration functionality will be connected to backend');
+  const onRegister = async (data: RegisterFormData) => {
+    setIsLoading(true);
+    try {
+      const { error } = await signUp(data.email, data.password, {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone: data.phone,
+        address: data.address,
+        city: data.city,
+        postal_code: data.postalCode,
+        country: data.country,
+      });
+      
+      if (error) {
+        if (error.message.includes('User already registered')) {
+          toast.error('An account with this email already exists');
+        } else {
+          toast.error(error.message);
+        }
+        return;
+      }
+      
+      toast.success('Account created successfully!');
+      navigate('/');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -124,6 +177,7 @@ const Auth = () => {
                                   placeholder="you@example.com" 
                                   className="pl-10"
                                   autoComplete="email"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </div>
@@ -146,6 +200,7 @@ const Auth = () => {
                                   placeholder="••••••••" 
                                   className="pl-10 pr-10"
                                   autoComplete="current-password"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                                 <button
@@ -161,8 +216,15 @@ const Auth = () => {
                           </FormItem>
                         )}
                       />
-                      <Button type="submit" className="w-full" variant="gradient">
-                        Sign In
+                      <Button type="submit" className="w-full" variant="gradient" disabled={isLoading}>
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Signing in...
+                          </>
+                        ) : (
+                          'Sign In'
+                        )}
                       </Button>
                     </form>
                   </Form>
@@ -182,6 +244,7 @@ const Auth = () => {
                                 <Input 
                                   placeholder="John" 
                                   autoComplete="given-name"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </FormControl>
@@ -199,6 +262,7 @@ const Auth = () => {
                                 <Input 
                                   placeholder="Doe" 
                                   autoComplete="family-name"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </FormControl>
@@ -221,6 +285,7 @@ const Auth = () => {
                                   placeholder="you@example.com" 
                                   className="pl-10"
                                   autoComplete="email"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </div>
@@ -240,6 +305,7 @@ const Auth = () => {
                                 type="tel" 
                                 placeholder="+27 66 046 2575"
                                 autoComplete="tel"
+                                disabled={isLoading}
                                 {...field} 
                               />
                             </FormControl>
@@ -257,6 +323,7 @@ const Auth = () => {
                               <Input 
                                 placeholder="123 Main Street"
                                 autoComplete="street-address"
+                                disabled={isLoading}
                                 {...field} 
                               />
                             </FormControl>
@@ -275,6 +342,7 @@ const Auth = () => {
                                 <Input 
                                   placeholder="Cape Town"
                                   autoComplete="address-level2"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </FormControl>
@@ -292,6 +360,7 @@ const Auth = () => {
                                 <Input 
                                   placeholder="8001"
                                   autoComplete="postal-code"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                               </FormControl>
@@ -310,6 +379,7 @@ const Auth = () => {
                               <Input 
                                 placeholder="South Africa"
                                 autoComplete="country-name"
+                                disabled={isLoading}
                                 {...field} 
                               />
                             </FormControl>
@@ -331,6 +401,7 @@ const Auth = () => {
                                   placeholder="••••••••" 
                                   className="pl-10 pr-10"
                                   autoComplete="new-password"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                                 <button
@@ -360,6 +431,7 @@ const Auth = () => {
                                   placeholder="••••••••" 
                                   className="pl-10 pr-10"
                                   autoComplete="new-password"
+                                  disabled={isLoading}
                                   {...field} 
                                 />
                                 <button
@@ -375,8 +447,15 @@ const Auth = () => {
                           </FormItem>
                         )}
                       />
-                      <Button type="submit" className="w-full" variant="gradient">
-                        Create Account
+                      <Button type="submit" className="w-full" variant="gradient" disabled={isLoading}>
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Creating account...
+                          </>
+                        ) : (
+                          'Create Account'
+                        )}
                       </Button>
                     </form>
                   </Form>
