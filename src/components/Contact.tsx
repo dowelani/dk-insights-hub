@@ -19,7 +19,7 @@ const Contact = () => {
             Let's Start a Conversation
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to transform your business with technology and data? Reach out to us on WhatsApp.
+            Ready to transform your business with technology and data?
           </p>
         </div>
 
