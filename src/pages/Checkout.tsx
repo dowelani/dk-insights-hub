@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard } from 'lucide-react';
+import { ArrowLeft, CreditCard, MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -12,15 +12,38 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import PriceTag from '@/components/shop/PriceTag';
 import CurrencySwitcher from '@/components/shop/CurrencySwitcher';
 import { Label } from '@/components/ui/label';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, getTotalZAR, getTotalUSD } = useCart();
-  const { formatPrice } = useCurrency();
+  const { formatPrice, currency } = useCurrency();
   const [paymentMethod, setPaymentMethod] = useState('eft');
+  const [showPaymentNotice, setShowPaymentNotice] = useState(false);
 
   const handlePlaceOrder = () => {
-    navigate('/order-summary');
+    setShowPaymentNotice(true);
+  };
+
+  const handleWhatsAppOrder = () => {
+    const phoneNumber = '27824099029'; // Replace with your WhatsApp number
+    const orderItems = items
+      .map((item) => `• ${item.product.title} × ${item.quantity} - ${formatPrice(item.product.priceZAR * item.quantity, item.product.priceUSD * item.quantity)}`)
+      .join('\n');
+    const total = currency === 'ZAR' ? `R${getTotalZAR().toFixed(2)}` : `$${getTotalUSD().toFixed(2)}`;
+    
+    const message = encodeURIComponent(
+      `Hi! I'd like to place an order:\n\n${orderItems}\n\n*Total: ${total}*\n\nPayment Method: ${paymentMethod.toUpperCase()}\n\nPlease confirm availability and send payment details.`
+    );
+    
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    setShowPaymentNotice(false);
   };
 
   if (items.length === 0) {
@@ -176,6 +199,38 @@ const Checkout = () => {
       </main>
       
       <Footer />
+
+      {/* Payment Not Available Dialog */}
+      <Dialog open={showPaymentNotice} onOpenChange={setShowPaymentNotice}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-primary" />
+              Online Payment Coming Soon
+            </DialogTitle>
+            <DialogDescription className="pt-2">
+              Online payment is not available yet. Please send your order via WhatsApp and we'll process it manually.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 mt-4">
+            <Button 
+              variant="whatsapp" 
+              size="lg" 
+              onClick={handleWhatsAppOrder}
+              className="w-full"
+            >
+              <MessageCircle className="w-5 h-5 mr-2" />
+              Order via WhatsApp
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowPaymentNotice(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
