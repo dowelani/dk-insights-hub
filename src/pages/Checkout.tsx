@@ -32,7 +32,7 @@ const Checkout = () => {
   };
 
   const handleWhatsAppOrder = () => {
-    const phoneNumber = '27824099029'; // Replace with your WhatsApp number
+    const phoneNumber = '27660462575';
     const orderItems = items
       .map((item) => `• ${item.product.title} × ${item.quantity} - ${formatPrice(item.product.priceZAR * item.quantity, item.product.priceUSD * item.quantity)}`)
       .join('\n');
