@@ -60,7 +60,7 @@ const Portfolio = () => {
           {projects.map((project, index) => (
             <Card 
               key={project.title}
-              className="overflow-hidden border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant group"
+              className="animate-fade-in overflow-hidden border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant group"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-48 overflow-hidden bg-muted">

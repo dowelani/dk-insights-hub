@@ -63,7 +63,7 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={service.title}
-              className="border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card"
+              className="animate-fade-in border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardHeader>
@@ -88,7 +88,7 @@ const Services = () => {
         </div>
 
         <div className="mt-16 grid md:grid-cols-2 gap-8">
-          <Card className="bg-gradient-primary text-primary-foreground border-0 shadow-elegant">
+          <Card className="animate-fade-in bg-gradient-primary text-primary-foreground border-0 shadow-elegant">
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
                 <TrendingUp className="w-8 h-8" />
@@ -100,7 +100,7 @@ const Services = () => {
             </CardHeader>
           </Card>
 
-          <Card className="bg-card border-2 border-accent/20 shadow-soft">
+          <Card className="animate-fade-in bg-card border-2 border-accent/20 shadow-soft" style={{ animationDelay: '100ms' }}>
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
                 <Database className="w-8 h-8 text-accent" />
