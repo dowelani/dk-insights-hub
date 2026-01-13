@@ -51,7 +51,7 @@ const Header = () => {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-background rounded-lg p-1 flex items-center justify-center">
+            <div className="w-12 h-12 logo-container rounded-lg p-1 flex items-center justify-center">
               <img src={logo} alt="DK Code & Insights Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-xl font-bold text-foreground hidden sm:block">DK Code & Insights</span>
@@ -82,7 +82,9 @@ const Header = () => {
             <SheetContent side="left" className="w-[280px]">
               <div className="flex flex-col gap-6 mt-8">
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+                  <div className="w-10 h-10 logo-container rounded-lg p-0.5 flex items-center justify-center">
+                    <img src={logo} alt="Logo" className="w-full h-full object-contain" />
+                  </div>
                   <span className="font-bold text-foreground">DK Code & Insights</span>
                 </div>
                 <nav className="flex flex-col gap-4">
