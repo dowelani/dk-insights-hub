@@ -22,7 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
 
   return (
-    <Card className="group relative flex flex-col h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant">
+    <Card className="animate-fade-in group relative flex flex-col h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant">
       {product.popular && (
         <div className="absolute top-3 right-3 z-10">
           <Badge className="bg-accent text-accent-foreground flex items-center gap-1">

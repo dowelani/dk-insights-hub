@@ -24,7 +24,7 @@ const Contact = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-4xl lg:max-w-none mx-auto">
-          <Card className="bg-gradient-primary text-primary-foreground border-0 shadow-elegant p-8 w-full">
+          <Card className="animate-fade-in bg-gradient-primary text-primary-foreground border-0 shadow-elegant p-8 w-full">
             <CardContent className="p-0 text-center lg:text-left">
               <h3 className="text-3xl font-bold mb-6">Contact us via WhatsApp</h3>
               <p className="text-primary-foreground/90 text-lg mb-8 leading-relaxed">
@@ -68,7 +68,7 @@ const Contact = () => {
           </Card>
 
           <div className="space-y-6 w-full">
-            <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '100ms' }}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -84,7 +84,7 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '200ms' }}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -100,7 +100,7 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '300ms' }}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">

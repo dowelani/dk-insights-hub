@@ -37,7 +37,7 @@ const About = () => {
             {stats.map((stat, index) => (
               <Card 
                 key={stat.label}
-                className="border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
+                className="animate-fade-in border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6 text-center">
@@ -69,7 +69,7 @@ const About = () => {
           ].map((item, index) => (
             <Card 
               key={item.title}
-              className="bg-card border border-border hover:shadow-soft transition-all duration-300"
+              className="animate-fade-in bg-card border border-border hover:shadow-soft transition-all duration-300"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardContent className="p-6">
