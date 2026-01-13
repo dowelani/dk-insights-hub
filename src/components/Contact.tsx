@@ -43,24 +43,24 @@ const Contact = () => {
                 </Button>
               </div>
               
-              <div className="mt-12 space-y-4">
-                <div className="flex items-center lg:items-start gap-4 justify-center lg:justify-start">
+              <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <div className="font-semibold mb-1">Email</div>
-                    <a href="mailto:dowelanikhumbelo@gmail.com" className="text-primary-foreground/80 hover:underline">dowelanikhumbelo@gmail.com</a>
+                    <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Email</div>
+                    <a href="mailto:dowelanikhumbelo@gmail.com" className="text-primary-foreground hover:underline text-sm">dowelanikhumbelo@gmail.com</a>
                   </div>
                 </div>
                 
-                <div className="flex items-center lg:items-start gap-4 justify-center lg:justify-start">
+                <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <div className="font-semibold mb-1">Phone</div>
-                    <div className="text-primary-foreground/80">Available via WhatsApp</div>
+                    <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Phone</div>
+                    <div className="text-primary-foreground text-sm">+27 66 046 2575</div>
                   </div>
                 </div>
               </div>

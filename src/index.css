@@ -4,101 +4,104 @@
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
-Logo colors: Dark slate blue background (#3a4f5f ~ HSL 200 24% 30%), Teal (#2eb8a8 ~ HSL 172 66% 45%), Orange (#e88c4a ~ HSL 28 78% 60%)
+Logo colors: Dark slate (#2d3e50), Teal (#1a9e8c), Orange (#e07d3a)
+Refined palette with better harmony
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 200 24% 20%;
+    --background: 210 20% 98%;
+    --foreground: 210 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 24% 20%;
+    --card-foreground: 210 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 24% 20%;
+    --popover-foreground: 210 25% 15%;
 
-    --primary: 172 66% 45%;
+    --primary: 170 70% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 20% 94%;
-    --secondary-foreground: 200 24% 20%;
+    --secondary: 210 15% 93%;
+    --secondary-foreground: 210 25% 25%;
 
-    --muted: 200 15% 96%;
-    --muted-foreground: 200 15% 45%;
+    --muted: 210 12% 94%;
+    --muted-foreground: 210 10% 45%;
 
-    --accent: 28 78% 55%;
+    --accent: 22 75% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 88%;
-    --input: 200 20% 88%;
-    --ring: 172 66% 45%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 170 70% 35%;
 
     --radius: 0.75rem;
     
     /* Custom design tokens */
-    --logo-bg: 200 24% 30%;
-    --gradient-primary: linear-gradient(135deg, hsl(172 66% 45%), hsl(28 78% 55%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(200 20% 98%));
-    --shadow-elegant: 0 10px 40px -10px hsl(172 66% 45% / 0.25);
-    --shadow-soft: 0 4px 20px -4px hsl(200 24% 20% / 0.1);
+    --logo-bg: 207 30% 25%;
+    --gradient-primary: linear-gradient(135deg, hsl(170 70% 35%), hsl(170 55% 45%));
+    --gradient-accent: linear-gradient(135deg, hsl(22 75% 55%), hsl(22 80% 60%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 15% 95%));
+    --shadow-elegant: 0 10px 40px -10px hsl(170 70% 35% / 0.2);
+    --shadow-soft: 0 4px 20px -4px hsl(210 25% 15% / 0.08);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-foreground: 210 25% 25%;
+    --sidebar-primary: 210 25% 15%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 172 66% 45%;
+    --sidebar-accent: 210 12% 94%;
+    --sidebar-accent-foreground: 210 25% 15%;
+    --sidebar-border: 210 15% 90%;
+    --sidebar-ring: 170 70% 35%;
   }
 
   .dark {
-    --background: 200 24% 12%;
-    --foreground: 0 0% 98%;
+    --background: 210 25% 10%;
+    --foreground: 210 15% 95%;
 
-    --card: 200 24% 16%;
-    --card-foreground: 0 0% 98%;
+    --card: 210 22% 14%;
+    --card-foreground: 210 15% 95%;
 
-    --popover: 200 24% 16%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 210 22% 14%;
+    --popover-foreground: 210 15% 95%;
 
-    --primary: 172 66% 50%;
-    --primary-foreground: 200 24% 12%;
+    --primary: 170 65% 42%;
+    --primary-foreground: 210 25% 10%;
 
-    --secondary: 200 24% 20%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 20% 18%;
+    --secondary-foreground: 210 15% 90%;
 
-    --muted: 200 24% 20%;
-    --muted-foreground: 200 15% 65%;
+    --muted: 210 20% 18%;
+    --muted-foreground: 210 12% 60%;
 
-    --accent: 28 78% 60%;
+    --accent: 22 75% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 50%;
+    --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 24% 25%;
-    --input: 200 24% 25%;
-    --ring: 172 66% 50%;
+    --border: 210 20% 22%;
+    --input: 210 20% 22%;
+    --ring: 170 65% 42%;
     
-    --logo-bg: 200 24% 30%;
-    --gradient-primary: linear-gradient(135deg, hsl(172 66% 50%), hsl(28 78% 60%));
-    --gradient-subtle: linear-gradient(180deg, hsl(200 24% 12%), hsl(200 24% 16%));
-    --shadow-elegant: 0 10px 40px -10px hsl(172 66% 50% / 0.3);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --logo-bg: 207 30% 25%;
+    --gradient-primary: linear-gradient(135deg, hsl(170 65% 42%), hsl(170 50% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(22 75% 55%), hsl(22 80% 60%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 25% 10%), hsl(210 22% 14%));
+    --shadow-elegant: 0 10px 40px -10px hsl(170 65% 42% / 0.25);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.25);
+    --sidebar-background: 210 25% 10%;
+    --sidebar-foreground: 210 15% 90%;
+    --sidebar-primary: 170 65% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 172 66% 50%;
+    --sidebar-accent: 210 20% 16%;
+    --sidebar-accent-foreground: 210 15% 90%;
+    --sidebar-border: 210 20% 20%;
+    --sidebar-ring: 170 65% 42%;
   }
 }
 
@@ -113,6 +116,6 @@ Logo colors: Dark slate blue background (#3a4f5f ~ HSL 200 24% 30%), Teal (#2eb8
   
   /* Logo container background matching the logo */
   .logo-container {
-    background-color: hsl(200 24% 30%);
+    background-color: hsl(207 30% 25%);
   }
 }
