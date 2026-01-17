@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code, BarChart3, Brain } from "lucide-react";
+import ScrollAnimateWrapper from "./ScrollAnimateWrapper";
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -10,7 +11,7 @@ const Hero = () => {
   return (
     <section className="pt-32 pb-20 px-4 bg-gradient-subtle">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center animate-fade-in">
+        <ScrollAnimateWrapper animation="fade-up" className="text-center">
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-medium">
             <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
             Transforming Data into Decisions
@@ -47,7 +48,7 @@ const Hero = () => {
               Our Services
             </Button>
           </div>
-        </div>
+        </ScrollAnimateWrapper>
 
         <div className="grid md:grid-cols-3 gap-6 mt-20">
           {[
@@ -55,16 +56,20 @@ const Hero = () => {
             { icon: BarChart3, label: "Data Analytics", color: "bg-accent/10 text-accent" },
             { icon: Brain, label: "Data Science", color: "bg-primary/10 text-primary" },
           ].map((item, index) => (
-            <div 
+            <ScrollAnimateWrapper 
               key={item.label}
-              className="flex items-center gap-4 p-6 bg-card rounded-xl border border-border shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1"
-              style={{ animationDelay: `${index * 100}ms` }}
+              animation="scale"
+              delay={(index + 1) * 100 as 100 | 200 | 300}
             >
-              <div className={`p-3 rounded-lg ${item.color}`}>
-                <item.icon className="w-6 h-6" />
+              <div 
+                className="flex items-center gap-4 p-6 bg-card rounded-xl border border-border shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className={`p-3 rounded-lg ${item.color}`}>
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <span className="font-semibold text-foreground">{item.label}</span>
               </div>
-              <span className="font-semibold text-foreground">{item.label}</span>
-            </div>
+            </ScrollAnimateWrapper>
           ))}
         </div>
       </div>

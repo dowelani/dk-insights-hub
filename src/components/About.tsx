@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Users, Target, Zap } from "lucide-react";
+import ScrollAnimateWrapper from "./ScrollAnimateWrapper";
 
 const About = () => {
   const stats = [
@@ -13,7 +14,7 @@ const About = () => {
     <section id="about" className="py-20 px-4 bg-muted/30">
       <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in">
+          <ScrollAnimateWrapper animation="fade-left">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary font-medium">
               <span className="w-2 h-2 bg-primary rounded-full"></span>
               About Us
@@ -31,23 +32,27 @@ const About = () => {
               comprehensive solutions that are not just technically sound, but strategically aligned 
               with your business objectives.
             </p>
-          </div>
+          </ScrollAnimateWrapper>
 
           <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, index) => (
-              <Card 
+              <ScrollAnimateWrapper 
                 key={stat.label}
-                className="animate-fade-in border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
-                style={{ animationDelay: `${index * 100}ms` }}
+                animation="scale"
+                delay={(index + 1) * 100 as 100 | 200 | 300 | 400}
               >
-                <CardContent className="p-6 text-center">
-                  <div className={`w-12 h-12 mx-auto mb-4 bg-gradient-primary rounded-xl flex items-center justify-center`}>
-                    <stat.icon className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </CardContent>
-              </Card>
+                <Card 
+                  className="h-full border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-12 h-12 mx-auto mb-4 bg-gradient-primary rounded-xl flex items-center justify-center`}>
+                      <stat.icon className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </CardContent>
+                </Card>
+              </ScrollAnimateWrapper>
             ))}
           </div>
         </div>
@@ -67,16 +72,20 @@ const About = () => {
               description: "Dedicated to your success with transparent communication and unwavering quality standards.",
             },
           ].map((item, index) => (
-            <Card 
+            <ScrollAnimateWrapper 
               key={item.title}
-              className="animate-fade-in bg-card border border-border hover:shadow-soft transition-all duration-300"
-              style={{ animationDelay: `${index * 100}ms` }}
+              animation="fade-up"
+              delay={(index + 1) * 100 as 100 | 200 | 300}
             >
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-              </CardContent>
-            </Card>
+              <Card 
+                className="h-full bg-card border border-border hover:shadow-soft transition-all duration-300"
+              >
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </CardContent>
+              </Card>
+            </ScrollAnimateWrapper>
           ))}
         </div>
       </div>

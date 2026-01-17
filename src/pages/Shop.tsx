@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/shop/ProductCard';
 import CategoryFilter from '@/components/shop/CategoryFilter';
 import CurrencySwitcher from '@/components/shop/CurrencySwitcher';
+import ScrollAnimateWrapper from '@/components/ScrollAnimateWrapper';
 import { products, ProductCategory, ProductTier } from '@/data/products';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { Button } from '@/components/ui/button';
@@ -101,8 +102,14 @@ const Shop = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                {filteredProducts.map((product, index) => (
+                  <ScrollAnimateWrapper 
+                    key={product.id}
+                    animation="fade-up"
+                    delay={Math.min((index % 4 + 1) * 100, 400) as 100 | 200 | 300 | 400}
+                  >
+                    <ProductCard product={product} index={index} />
+                  </ScrollAnimateWrapper>
                 ))}
               </div>
             )}

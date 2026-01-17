@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code, BarChart3, Brain, Sparkles, TrendingUp, Database } from "lucide-react";
+import ScrollAnimateWrapper from "./ScrollAnimateWrapper";
 
 const Services = () => {
   const services = [
@@ -46,7 +47,7 @@ const Services = () => {
   return (
     <section id="services" className="py-20 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16 animate-fade-in">
+        <ScrollAnimateWrapper animation="fade-up" className="text-center mb-16">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-medium">
             <Sparkles className="w-4 h-4" />
             Our Expertise
@@ -57,60 +58,68 @@ const Services = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Comprehensive solutions to elevate your business through technology and data-driven strategies
           </p>
-        </div>
+        </ScrollAnimateWrapper>
 
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card 
+            <ScrollAnimateWrapper 
               key={service.title}
-              className="animate-fade-in border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card"
-              style={{ animationDelay: `${index * 100}ms` }}
+              animation="fade-up"
+              delay={(index + 1) * 100 as 100 | 200 | 300}
             >
-              <CardHeader>
-                <div className={`w-14 h-14 ${service.bgColor} rounded-xl flex items-center justify-center mb-4`}>
-                  <service.icon className={`w-7 h-7 ${service.color}`} />
-                </div>
-                <CardTitle className="text-2xl mb-2">{service.title}</CardTitle>
-                <CardDescription className="text-base">{service.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+              <Card 
+                className="h-full border-2 hover:border-accent/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card"
+              >
+                <CardHeader>
+                  <div className={`w-14 h-14 ${service.bgColor} rounded-xl flex items-center justify-center mb-4`}>
+                    <service.icon className={`w-7 h-7 ${service.color}`} />
+                  </div>
+                  <CardTitle className="text-2xl mb-2">{service.title}</CardTitle>
+                  <CardDescription className="text-base">{service.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </ScrollAnimateWrapper>
           ))}
         </div>
 
         <div className="mt-16 grid md:grid-cols-2 gap-8">
-          <Card className="animate-fade-in bg-gradient-primary text-primary-foreground border-0 shadow-elegant">
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-8 h-8" />
-                <CardTitle className="text-2xl">Growth Focused</CardTitle>
-              </div>
-              <CardDescription className="text-primary-foreground/80 text-base">
-                Every solution is designed to scale with your business and drive measurable results.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <ScrollAnimateWrapper animation="fade-left">
+            <Card className="h-full bg-gradient-primary text-primary-foreground border-0 shadow-elegant">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <TrendingUp className="w-8 h-8" />
+                  <CardTitle className="text-2xl">Growth Focused</CardTitle>
+                </div>
+                <CardDescription className="text-primary-foreground/80 text-base">
+                  Every solution is designed to scale with your business and drive measurable results.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </ScrollAnimateWrapper>
 
-          <Card className="animate-fade-in bg-card border-2 border-accent/20 shadow-soft" style={{ animationDelay: '100ms' }}>
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <Database className="w-8 h-8 text-accent" />
-                <CardTitle className="text-2xl">Data-Driven</CardTitle>
-              </div>
-              <CardDescription className="text-base">
-                Leveraging cutting-edge analytics and AI to turn data into your competitive advantage.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <ScrollAnimateWrapper animation="fade-right">
+            <Card className="h-full bg-card border-2 border-accent/20 shadow-soft">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Database className="w-8 h-8 text-accent" />
+                  <CardTitle className="text-2xl">Data-Driven</CardTitle>
+                </div>
+                <CardDescription className="text-base">
+                  Leveraging cutting-edge analytics and AI to turn data into your competitive advantage.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </ScrollAnimateWrapper>
         </div>
       </div>
     </section>
