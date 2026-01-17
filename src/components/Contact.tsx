@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MessageCircle, Mail, MapPin, Phone } from "lucide-react";
+import ScrollAnimateWrapper from "./ScrollAnimateWrapper";
 
 const Contact = () => {
   const handleWhatsAppClick = () => {
@@ -10,7 +11,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16 animate-fade-in">
+        <ScrollAnimateWrapper animation="fade-up" className="text-center mb-16">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-medium">
             <MessageCircle className="w-4 h-4" />
             Get In Touch
@@ -21,100 +22,108 @@ const Contact = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Ready to transform your business with technology and data?
           </p>
-        </div>
+        </ScrollAnimateWrapper>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-4xl lg:max-w-none mx-auto">
-          <Card className="animate-fade-in bg-gradient-primary text-primary-foreground border-0 shadow-elegant p-8 w-full">
-            <CardContent className="p-0 text-center lg:text-left">
-              <h3 className="text-3xl font-bold mb-6">Contact us via WhatsApp</h3>
-              <p className="text-primary-foreground/90 text-lg mb-8 leading-relaxed">
-                We're here to answer your questions and discuss how we can help your business grow. 
-                Click the button below to start a conversation on WhatsApp.
-              </p>
-              <div className="flex justify-center lg:justify-start">
-                <Button 
-                  variant="whatsapp" 
-                  size="lg" 
-                  onClick={handleWhatsAppClick}
-                  className="w-full sm:w-auto text-lg px-8 py-6 gap-3"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Message on WhatsApp
-                </Button>
-              </div>
-              
-              <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Email</div>
-                    <a href="mailto:dowelanikhumbelo@gmail.com" className="text-primary-foreground hover:underline text-sm">dowelanikhumbelo@gmail.com</a>
-                  </div>
+          <ScrollAnimateWrapper animation="fade-left">
+            <Card className="bg-gradient-primary text-primary-foreground border-0 shadow-elegant p-8 w-full">
+              <CardContent className="p-0 text-center lg:text-left">
+                <h3 className="text-3xl font-bold mb-6">Contact us via WhatsApp</h3>
+                <p className="text-primary-foreground/90 text-lg mb-8 leading-relaxed">
+                  We're here to answer your questions and discuss how we can help your business grow. 
+                  Click the button below to start a conversation on WhatsApp.
+                </p>
+                <div className="flex justify-center lg:justify-start">
+                  <Button 
+                    variant="whatsapp" 
+                    size="lg" 
+                    onClick={handleWhatsAppClick}
+                    className="w-full sm:w-auto text-lg px-8 py-6 gap-3"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Message on WhatsApp
+                  </Button>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5" />
+                <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Email</div>
+                      <a href="mailto:dowelanikhumbelo@gmail.com" className="text-primary-foreground hover:underline text-sm">dowelanikhumbelo@gmail.com</a>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Phone</div>
-                    <div className="text-primary-foreground text-sm">+27 66 046 2575</div>
+                  
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs uppercase tracking-wide text-primary-foreground/60 mb-0.5">Phone</div>
+                      <div className="text-primary-foreground text-sm">+27 66 046 2575</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </ScrollAnimateWrapper>
 
           <div className="space-y-6 w-full">
-            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '100ms' }}>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-6 h-6 text-primary" />
+            <ScrollAnimateWrapper animation="fade-right" delay={100}>
+              <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-foreground mb-2">Quick Response</h4>
+                      <p className="text-muted-foreground">
+                        Get answers to your questions within minutes. We're always ready to help.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-foreground mb-2">Quick Response</h4>
-                    <p className="text-muted-foreground">
-                      Get answers to your questions within minutes. We're always ready to help.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </ScrollAnimateWrapper>
 
-            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '200ms' }}>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-accent" />
+            <ScrollAnimateWrapper animation="fade-right" delay={200}>
+              <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-foreground mb-2">Direct Communication</h4>
+                      <p className="text-muted-foreground">
+                        Speak directly with our team about your project needs and requirements.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-foreground mb-2">Direct Communication</h4>
-                    <p className="text-muted-foreground">
-                      Speak directly with our team about your project needs and requirements.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </ScrollAnimateWrapper>
 
-            <Card className="animate-fade-in border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft" style={{ animationDelay: '300ms' }}>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-primary" />
+            <ScrollAnimateWrapper animation="fade-right" delay={300}>
+              <Card className="border-2 border-border hover:border-accent/50 transition-all duration-300 hover:shadow-soft">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-foreground mb-2">Available Worldwide</h4>
+                      <p className="text-muted-foreground">
+                        Serving clients globally with remote collaboration and delivery.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-foreground mb-2">Available Worldwide</h4>
-                    <p className="text-muted-foreground">
-                      Serving clients globally with remote collaboration and delivery.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </ScrollAnimateWrapper>
           </div>
         </div>
       </div>
