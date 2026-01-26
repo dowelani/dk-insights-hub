@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, MessageCircle } from 'lucide-react';
+import { ArrowLeft, CreditCard, MessageCircle, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -9,9 +9,12 @@ import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { useAuth } from '@/contexts/AuthContext';
 import PriceTag from '@/components/shop/PriceTag';
 import CurrencySwitcher from '@/components/shop/CurrencySwitcher';
 import { Label } from '@/components/ui/label';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import {
   Dialog,
   DialogContent,
@@ -22,28 +25,169 @@ import {
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { items, getTotalZAR, getTotalUSD } = useCart();
+  const { items, getTotalZAR, getTotalUSD, clearCart } = useCart();
   const { formatPrice, currency } = useCurrency();
-  const [paymentMethod, setPaymentMethod] = useState('eft');
+  const { user, profile, session } = useAuth();
+  const [paymentMethod, setPaymentMethod] = useState('payfast');
   const [showPaymentNotice, setShowPaymentNotice] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const handlePlaceOrder = () => {
-    setShowPaymentNotice(true);
+  const handlePlaceOrder = async () => {
+    if (!user || !session) {
+      toast.error('Please login to complete your order');
+      navigate('/auth');
+      return;
+    }
+
+    if (paymentMethod === 'eft' || paymentMethod === 'paypal') {
+      setShowPaymentNotice(true);
+      return;
+    }
+
+    // PayFast payment
+    setIsProcessing(true);
+
+    try {
+      // Create order in database first
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          total_zar: getTotalZAR(),
+          total_usd: getTotalUSD(),
+          payment_method: 'payfast',
+          status: 'pending',
+        })
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      // Create order items
+      const orderItems = items.map((item) => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        product_title: item.product.title,
+        quantity: item.quantity,
+        price_zar: item.product.priceZAR * item.quantity,
+        price_usd: item.product.priceUSD * item.quantity,
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      // Call PayFast edge function
+      const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
+        'create-payfast-payment',
+        {
+          body: {
+            orderId: order.id,
+            totalZAR: getTotalZAR(),
+            items: items.map((item) => ({
+              title: item.product.title,
+              quantity: item.quantity,
+              priceZAR: item.product.priceZAR,
+            })),
+            customerEmail: profile?.email || user.email || '',
+            customerName: `${profile?.first_name || ''} ${profile?.last_name || ''}`.trim() || 'Customer',
+          },
+        }
+      );
+
+      if (paymentError) throw paymentError;
+
+      // Create and submit PayFast form
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = paymentData.paymentUrl;
+
+      Object.entries(paymentData.paymentData).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value as string;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      
+      // Clear cart before redirect
+      clearCart();
+      
+      form.submit();
+    } catch (error: any) {
+      console.error('Payment error:', error);
+      toast.error(error.message || 'Failed to process payment');
+      setIsProcessing(false);
+    }
   };
 
-  const handleWhatsAppOrder = () => {
-    const phoneNumber = '27660462575';
-    const orderItems = items
-      .map((item) => `• ${item.product.title} × ${item.quantity} - ${formatPrice(item.product.priceZAR * item.quantity, item.product.priceUSD * item.quantity)}`)
-      .join('\n');
-    const total = currency === 'ZAR' ? `R${getTotalZAR().toFixed(2)}` : `$${getTotalUSD().toFixed(2)}`;
-    
-    const message = encodeURIComponent(
-      `Hi! I'd like to place an order:\n\n${orderItems}\n\n*Total: ${total}*\n\nPayment Method: ${paymentMethod.toUpperCase()}\n\nPlease confirm availability and send payment details.`
-    );
-    
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-    setShowPaymentNotice(false);
+  const handleWhatsAppOrder = async () => {
+    if (!user || !session) {
+      toast.error('Please login to complete your order');
+      navigate('/auth');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      // Create order in database
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          total_zar: getTotalZAR(),
+          total_usd: getTotalUSD(),
+          payment_method: paymentMethod,
+          status: 'pending',
+        })
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      // Create order items
+      const orderItems = items.map((item) => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        product_title: item.product.title,
+        quantity: item.quantity,
+        price_zar: item.product.priceZAR * item.quantity,
+        price_usd: item.product.priceUSD * item.quantity,
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      // Send WhatsApp message
+      const phoneNumber = '27660462575';
+      const orderItemsText = items
+        .map((item) => `• ${item.product.title} × ${item.quantity} - ${formatPrice(item.product.priceZAR * item.quantity, item.product.priceUSD * item.quantity)}`)
+        .join('\n');
+      const total = currency === 'ZAR' ? `R${getTotalZAR().toFixed(2)}` : `$${getTotalUSD().toFixed(2)}`;
+      
+      const message = encodeURIComponent(
+        `Hi! I'd like to place an order:\n\nOrder ID: ${order.id}\n\n${orderItemsText}\n\n*Total: ${total}*\n\nPayment Method: ${paymentMethod.toUpperCase()}\n\nPlease confirm availability and send payment details.`
+      );
+      
+      window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+      
+      clearCart();
+      setShowPaymentNotice(false);
+      navigate(`/order-summary?order_id=${order.id}`);
+    } catch (error: any) {
+      console.error('Order error:', error);
+      toast.error(error.message || 'Failed to create order');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (items.length === 0) {
@@ -103,40 +247,42 @@ const Checkout = () => {
                   <CardContent>
                     <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-3">
                       <div className="flex items-center space-x-3 p-4 border border-border rounded-lg hover:border-primary/50 transition-colors">
+                        <RadioGroupItem value="payfast" id="payfast" />
+                        <Label htmlFor="payfast" className="flex-1 cursor-pointer">
+                          <span className="font-medium">PayFast</span>
+                          <span className="text-sm text-muted-foreground block">Pay securely with card, EFT, or SnapScan</span>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-3 p-4 border border-border rounded-lg hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="eft" id="eft" />
                         <Label htmlFor="eft" className="flex-1 cursor-pointer">
-                          <span className="font-medium">EFT / Bank Transfer</span>
-                          <span className="text-sm text-muted-foreground block">Direct bank transfer</span>
+                          <span className="font-medium">Manual EFT / Bank Transfer</span>
+                          <span className="text-sm text-muted-foreground block">Order via WhatsApp for manual payment</span>
                         </Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 border border-border rounded-lg hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="paypal" id="paypal" />
                         <Label htmlFor="paypal" className="flex-1 cursor-pointer">
                           <span className="font-medium">PayPal</span>
-                          <span className="text-sm text-muted-foreground block">Pay with your PayPal account</span>
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-3 p-4 border border-border rounded-lg hover:border-primary/50 transition-colors">
-                        <RadioGroupItem value="card" id="card" />
-                        <Label htmlFor="card" className="flex-1 cursor-pointer">
-                          <span className="font-medium">Card Payment</span>
-                          <span className="text-sm text-muted-foreground block">Pay with your card</span>
+                          <span className="text-sm text-muted-foreground block">Order via WhatsApp for PayPal payment</span>
                         </Label>
                       </div>
                     </RadioGroup>
 
-                    <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-                      <p className="text-sm text-muted-foreground">
-                        <strong>Note:</strong> Please login or register to save your billing information and complete your purchase. You can still browse and add items to cart without an account.
-                      </p>
-                      <Button 
-                        variant="outline" 
-                        className="mt-3"
-                        onClick={() => navigate('/auth')}
-                      >
-                        Login / Register
-                      </Button>
-                    </div>
+                    {!user && (
+                      <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Note:</strong> Please login or register to complete your purchase.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          className="mt-3"
+                          onClick={() => navigate('/auth')}
+                        >
+                          Login / Register
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -183,8 +329,16 @@ const Checkout = () => {
                       className="w-full mt-6" 
                       variant="gradient" 
                       size="lg"
+                      disabled={isProcessing}
                     >
-                      Place Order
+                      {isProcessing ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        'Place Order'
+                      )}
                     </Button>
                     
                     <p className="text-xs text-center text-muted-foreground mt-4">
@@ -200,16 +354,16 @@ const Checkout = () => {
       
       <Footer />
 
-      {/* Payment Not Available Dialog */}
+      {/* WhatsApp Order Dialog */}
       <Dialog open={showPaymentNotice} onOpenChange={setShowPaymentNotice}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
-              Online Payment Coming Soon
+              <MessageCircle className="w-5 h-5 text-primary" />
+              Complete Order via WhatsApp
             </DialogTitle>
             <DialogDescription className="pt-2">
-              Online payment is not available yet. Please send your order via WhatsApp and we'll process it manually.
+              For {paymentMethod === 'eft' ? 'EFT/Bank Transfer' : 'PayPal'} payments, please complete your order via WhatsApp and we'll send you payment details.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3 mt-4">
@@ -218,13 +372,24 @@ const Checkout = () => {
               size="lg" 
               onClick={handleWhatsAppOrder}
               className="w-full"
+              disabled={isProcessing}
             >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Order via WhatsApp
+              {isProcessing ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Creating Order...
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Order via WhatsApp
+                </>
+              )}
             </Button>
             <Button 
               variant="outline" 
               onClick={() => setShowPaymentNotice(false)}
+              disabled={isProcessing}
             >
               Cancel
             </Button>
