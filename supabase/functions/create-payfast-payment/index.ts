@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { MD5 } from "https://esm.sh/crypto-js@4.2.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -89,12 +90,8 @@ const handler = async (req: Request): Promise<Response> => {
       .map(key => `${key}=${encodeURIComponent(paymentData[key].trim()).replace(/%20/g, "+")}`)
       .join("&");
 
-    // Create MD5 hash for signature
-    const encoder = new TextEncoder();
-    const data = encoder.encode(signatureString);
-    const hashBuffer = await crypto.subtle.digest("MD5", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const signature = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    // Create MD5 hash for signature using crypto-js
+    const signature = MD5(signatureString).toString();
 
     paymentData.signature = signature;
 
