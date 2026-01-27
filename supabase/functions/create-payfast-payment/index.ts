@@ -83,15 +83,30 @@ const handler = async (req: Request): Promise<Response> => {
       item_description: `Order ${orderId}`.substring(0, 255),
     };
 
-    // Generate signature (alphabetical order, exclude signature and empty values)
+    // Generate signature - PayFast requires specific format
+    // 1. Sort keys alphabetically
+    // 2. Exclude empty values and signature field
+    // 3. URL encode values but convert spaces to +
+    // 4. Join with &
     const sortedKeys = Object.keys(paymentData).sort();
-    const signatureString = sortedKeys
-      .filter(key => paymentData[key] !== "")
-      .map(key => `${key}=${encodeURIComponent(paymentData[key].trim()).replace(/%20/g, "+")}`)
-      .join("&");
-
+    const signatureParts: string[] = [];
+    
+    for (const key of sortedKeys) {
+      const value = paymentData[key];
+      if (value !== "" && key !== "signature") {
+        // PayFast requires spaces as + and specific encoding
+        const encodedValue = encodeURIComponent(value.trim())
+          .replace(/%20/g, "+");
+        signatureParts.push(`${key}=${encodedValue}`);
+      }
+    }
+    
+    const signatureString = signatureParts.join("&");
+    console.log("Signature string:", signatureString);
+    
     // Create MD5 hash for signature using crypto-js
     const signature = CryptoJS.MD5(signatureString).toString();
+    console.log("Generated signature:", signature);
 
     paymentData.signature = signature;
 
