@@ -104,6 +104,18 @@ const Checkout = () => {
       form.method = 'POST';
       form.action = paymentData.paymentUrl;
 
+      // PayFast blocks being loaded inside iframes (like the preview window).
+      // If we're in an iframe, open the payment in a new tab instead.
+      let isInIframe = false;
+      try {
+        isInIframe = window.self !== window.top;
+      } catch {
+        isInIframe = true;
+      }
+      if (isInIframe) {
+        form.target = '_blank';
+      }
+
       Object.entries(paymentData.paymentData).forEach(([key, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
