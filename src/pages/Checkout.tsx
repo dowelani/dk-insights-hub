@@ -125,11 +125,12 @@ const Checkout = () => {
       });
 
       document.body.appendChild(form);
-      
-      // Clear cart before redirect
-      clearCart();
-      
       form.submit();
+      
+      // Clear cart after a short delay to prevent UI flash before redirect
+      setTimeout(() => {
+        clearCart();
+      }, 500);
     } catch (error: any) {
       console.error('Payment error:', error);
       toast.error(error.message || 'Failed to process payment');
@@ -202,7 +203,8 @@ const Checkout = () => {
     }
   };
 
-  if (items.length === 0) {
+  // Don't show empty cart screen while processing payment redirect
+  if (items.length === 0 && !isProcessing) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
