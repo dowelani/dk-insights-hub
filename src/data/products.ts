@@ -21,6 +21,18 @@ export const categories: { id: ProductCategory; name: string; description: strin
 ];
 
 export const products: Product[] = [
+  // Test Product
+  {
+    id: 'test-service',
+    title: 'Test Service (R20)',
+    description: 'A test service to verify payment integration',
+    priceZAR: 20,
+    priceUSD: 1,
+    features: ['Payment test', 'Quick verification'],
+    category: 'digital-services',
+    tier: 'basic',
+  },
+
   // Web Development
   {
     id: 'web-basic',
