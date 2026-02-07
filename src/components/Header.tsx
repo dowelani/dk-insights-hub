@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { MessageCircle, Store, Menu, User, LogIn, LogOut } from "lucide-react";
+import { MessageCircle, Store, Menu, User, LogIn, LogOut, Settings } from "lucide-react";
 import logo from "@/assets/logo.png";
 import CartIcon from "@/components/shop/CartIcon";
 import { useAuth } from "@/contexts/AuthContext";
@@ -163,6 +163,10 @@ const Header = () => {
                     {profile?.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : user.email}
                   </div>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <Settings className="w-4 h-4 mr-2" />
+                    Edit Profile
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
